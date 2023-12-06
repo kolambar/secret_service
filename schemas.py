@@ -1,16 +1,13 @@
 from pydantic import BaseModel
 
 
-class SecretBase(BaseModel):
+class Secret(BaseModel):
     key: str
     secret: str
 
 
-class SecretCreate(SecretBase):
-    pass
-
-
-class Secret(SecretBase):
+class SecretSave(Secret):
+    secret: bytes
 
     class Config:
-        orm_mode = True
+        from_attributes = True
