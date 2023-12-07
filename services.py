@@ -87,6 +87,6 @@ def decode_it(user_key: str, encrypted_data: bytes) -> str:
     decipher = AES.new(padded_key, AES.MODE_EAX, nonce=nonce)  # передает ему тот же nonce, что создался при кодировке
 
     # Расшифровывает текст
-    decrypted_text = decipher.decrypt_and_verify(ciphertext, tag).decode().rstrip('\n\u0010')  # отрезает лишние символы
+    decrypted_text = decipher.decrypt_and_verify(ciphertext, tag).decode().rstrip('\n\u0010\b\u0007')  # отрезает лишние символы
 
     return decrypted_text

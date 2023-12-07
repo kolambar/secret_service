@@ -1,14 +1,27 @@
 version: "3.7"
 services:
 
+  app:
+
+    build: .
+    tty: true
+    command: sh -c "uvicorn main:app --reload"
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/code
+    depends_on:
+      mongo_db:
+        condition: service_healthy
+
   # database service
   mongo_db:
       image: mongo
       container_name: "mongo_db"
       ports:
         - "27017:27017"
-      networks:
-        - custom
-networks:
-  custom:
-    driver: bridge
+      healthcheck:
+        test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+
+volumes:
+  pg_data:
