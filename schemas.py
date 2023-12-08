@@ -6,4 +6,4 @@ from pydantic import BaseModel
 class Secret(BaseModel):
     key: str
     secret: str
-    ttl_seconds: Optional[int] = None
+    ttl_hours: Optional[int] = None

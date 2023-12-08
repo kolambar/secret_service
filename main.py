@@ -44,10 +44,10 @@ async def create_secret(secret: schemas.Secret, request: Request) -> dict:
         ciphertext = code_it(user_key, user_secret)
 
         # Установливает TTL для записи в базе данных, если ttl_seconds задано
-        ttl_seconds = secret.ttl_seconds
+        ttl_hours = secret.ttl_hours
         expiration_time = None
-        if ttl_seconds is not None:
-            expiration_time = datetime.utcnow() + timedelta(seconds=ttl_seconds * 3600)  # Переводит секунды в часы
+        if ttl_hours is not None:
+            expiration_time = datetime.utcnow() + timedelta(seconds=ttl_hours * 3600)  # Переводит секунды в часы
 
         # Записывает в базу данных
         await secret_service.records.insert_one({
